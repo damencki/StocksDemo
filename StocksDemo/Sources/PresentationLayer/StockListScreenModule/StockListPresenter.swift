@@ -17,6 +17,6 @@ class StockListPresenter: StockListPresenterProtocol {
     }
     
     func didSelect(stock: Stock) {
-        view?.show(module: ModulesBuilder.createStockDetailsModule())
+        view?.show(module: ModulesBuilder.createStockDetailsModule(stock: stock))
     }
 }
