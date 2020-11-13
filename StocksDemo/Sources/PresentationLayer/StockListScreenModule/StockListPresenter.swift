@@ -1,8 +1,8 @@
 import Foundation
 
 protocol StockListPresenterProtocol: class {
-    func viewDidLoad()
     func viewWillAppear()
+    func didSelect(stock: Stock)
 }
 
 class StockListPresenter: StockListPresenterProtocol {
@@ -12,11 +12,11 @@ class StockListPresenter: StockListPresenterProtocol {
         self.view = view
     }
     
-    func viewDidLoad() {
-        
-    }
-    
     func viewWillAppear() {
         view?.update(stocks: Stub().getStocks())
+    }
+    
+    func didSelect(stock: Stock) {
+        view?.show(module: ModulesBuilder.createStockDetailsModule())
     }
 }

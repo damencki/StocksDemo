@@ -8,4 +8,11 @@ class ModulesBuilder {
         view.presenter = presenter
         return view
     }
+    
+    static func createStockDetailsModule() -> UIViewController {
+        let view = StockDetailsViewCotnroller()
+        let presenter = StockDetailsPresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }
