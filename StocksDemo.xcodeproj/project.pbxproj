@@ -140,13 +140,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		B39F7088255ED38C00D4AB6F /* New Group */ = {
+		B39F7088255ED38C00D4AB6F /* StockDetailsModule */ = {
 			isa = PBXGroup;
 			children = (
 				B39F7086255ED38700D4AB6F /* StockDetailsViewCotnroller.swift */,
 				B39F7089255ED5D000D4AB6F /* StockDetailsPresenter.swift */,
 			);
-			path = "New Group";
+			path = StockDetailsModule;
 			sourceTree = "<group>";
 		};
 		B3AA9B03255EEC9900B78C25 /* BuisenessLayer */ = {
@@ -174,7 +174,7 @@
 				B314AE3C255DA70900E1EA51 /* LaunchScreen.storyboard */,
 				B39F7082255ECF2900D4AB6F /* ModulesBuilder.swift */,
 				B3D0BFC9255E9E670098800F /* StockListScreenModule */,
-				B39F7088255ED38C00D4AB6F /* New Group */,
+				B39F7088255ED38C00D4AB6F /* StockDetailsModule */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
