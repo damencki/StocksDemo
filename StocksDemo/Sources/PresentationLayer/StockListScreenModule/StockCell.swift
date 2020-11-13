@@ -107,16 +107,17 @@ class StockCell: UITableViewCell {
     func update(_ stock: Stock) {
         nameLabel.text = stock.name
         tickerNameLabel.text = stock.tickerName
-        if let laskStockValue = stock.values.last {
-            switch stock.getTrend() {
-            case .up:
-                updateTrend(value: String(laskStockValue), color: .cmykGreen, image: .upIcon)
-            case .down:
-                updateTrend(value: String(laskStockValue), color: .cmykRed, image: .downIcon)
-            case .equal:
-                updateTrend(value: String(laskStockValue), color: .black, image: nil)
-            }
-        }
         
+        guard let lastStockValue = stock.values.last else {
+            return
+        }
+        switch stock.getTrend() {
+        case .up:
+            updateTrend(value: String(lastStockValue), color: .cmykGreen, image: .upIcon)
+        case .down:
+            updateTrend(value: String(lastStockValue), color: .cmykRed, image: .downIcon)
+        case .equal:
+            updateTrend(value: String(lastStockValue), color: .black, image: nil)
+        }
     }
 }
