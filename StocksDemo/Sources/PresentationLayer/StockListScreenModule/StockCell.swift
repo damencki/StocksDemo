@@ -7,6 +7,7 @@ class StockCell: UITableViewCell {
         static let separatorLineHeight = 1
         static let nextButtonSize = CGSize(width: 10, height: 16)
         static let trendIconSize = CGSize(width: 10, height: 5)
+        static let valueLabelWidth = 35
     }
     
     private lazy var nameLabel = UILabel {
@@ -22,6 +23,7 @@ class StockCell: UITableViewCell {
     private lazy var valueLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
         $0.textColor = .black
+        $0.textAlignment = .right
     }
     
     private lazy var trendImageView = UIImageView {
@@ -65,6 +67,7 @@ class StockCell: UITableViewCell {
         valueLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel)
             $0.leading.equalTo(tickerNameLabel.snp.trailing).offset(Constants.defaultPadding)
+            $0.width.equalTo(Constants.valueLabelWidth)
         }
         
         contentView.addSubview(trendImageView)

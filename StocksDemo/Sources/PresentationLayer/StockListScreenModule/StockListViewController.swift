@@ -3,11 +3,13 @@ import UIKit
 
 protocol StockListViewProtocol: class {
     func update(stocks: [Stock])
+    func show(module: UIViewController)
 }
 
 class StockListViewController: UIViewController, StockListViewProtocol {
     private lazy var tableView = UITableView {
         $0.dataSource = self
+        $0.delegate = self
         $0.register(StockCell.self, forCellReuseIdentifier: String(describing: StockCell.self))
         $0.separatorStyle = .none
     }
@@ -24,7 +26,6 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +45,10 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     func update(stocks: [Stock]) {
         self.stocks = stocks
     }
+    
+    func show(module: UIViewController) {
+        navigationController?.pushViewController(module, animated: true)
+    }
 }
 
 extension StockListViewController: UITableViewDataSource {
@@ -59,5 +64,11 @@ extension StockListViewController: UITableViewDataSource {
         stockCell.reset()
         stockCell.update(stocks[indexPath.row])
         return stockCell
+    }
+}
+
+extension StockListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.didSelect(stock: stocks[indexPath.row])
     }
 }
