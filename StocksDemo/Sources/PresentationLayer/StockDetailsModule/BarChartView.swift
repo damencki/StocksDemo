@@ -26,8 +26,8 @@ class BarChartView: UIView {
     }
     
     func update(stock: Stock) {
-        let buyingValueIndex =  0
-        let sellingValueIndex = 1
+        let buyingValueIndex =  stock.getProfit().buyingPriceIndex
+        let sellingValueIndex = stock.getProfit().sellingPriceIndex
         let views = stock.values.map { _ in BarView() }
            views.forEach { stackView.addArrangedSubview($0) }
            for index in 0 ..< stock.values.count {
