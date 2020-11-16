@@ -55,9 +55,7 @@ class BarView: UIView {
     private func updateFilledView() {
         let totalHeight = bounds.height
         let filledHeight = (CGFloat(integerLiteral: value) * totalHeight) / CGFloat(integerLiteral: maximumValue)
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.topFilledViewConstraint?.update(inset: filledHeight)
-            self?.layoutIfNeeded()
-        }
+            topFilledViewConstraint?.update(inset: filledHeight)
+            layoutIfNeeded()
     }
 }
