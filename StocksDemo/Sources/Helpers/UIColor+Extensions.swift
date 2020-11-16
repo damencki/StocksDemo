@@ -1,6 +1,8 @@
 import UIKit.UIColor
 
 extension UIColor {
+    static let background = UIColor(named: "background")
+    
     static var cmykGreen: UIColor {
         guard let cmykGreenColor = UIColor(named: "cmykGreen") else  {
             return .green
@@ -14,4 +16,6 @@ extension UIColor {
         }
         return cmykRedColor
     }
+    
+    static let filled = UIColor(named: "filled")
 }

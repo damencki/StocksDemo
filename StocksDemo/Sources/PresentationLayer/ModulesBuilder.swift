@@ -9,9 +9,9 @@ class ModulesBuilder {
         return view
     }
     
-    static func createStockDetailsModule() -> UIViewController {
+    static func createStockDetailsModule(stock: Stock) -> UIViewController {
         let view = StockDetailsViewCotnroller()
-        let presenter = StockDetailsPresenter(view: view)
+        let presenter = StockDetailsPresenter(view: view, stock: stock)
         view.presenter = presenter
         return view
     }

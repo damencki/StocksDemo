@@ -11,6 +11,8 @@
 		B314AE36255DA70600E1EA51 /* StockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314AE35255DA70600E1EA51 /* StockListViewController.swift */; };
 		B314AE3B255DA70900E1EA51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B314AE3A255DA70900E1EA51 /* Assets.xcassets */; };
 		B314AE3E255DA70900E1EA51 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B314AE3C255DA70900E1EA51 /* LaunchScreen.storyboard */; };
+		B3189DAA255EF33300BFBBE5 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3189DA9255EF33300BFBBE5 /* BarView.swift */; };
+		B3189DAC255EFAB100BFBBE5 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3189DAB255EFAB100BFBBE5 /* BarChartView.swift */; };
 		B34EDE8D255E76F6009728BD /* ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34EDE8C255E76F6009728BD /* ViewBuilder.swift */; };
 		B39F707E255EB6B800D4AB6F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F707D255EB6B800D4AB6F /* UIImage+Extensions.swift */; };
 		B39F7081255EB9F000D4AB6F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7080255EB9F000D4AB6F /* UIColor+Extensions.swift */; };
@@ -32,6 +34,8 @@
 		B314AE3A255DA70900E1EA51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B314AE3D255DA70900E1EA51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B314AE3F255DA70900E1EA51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3189DA9255EF33300BFBBE5 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		B3189DAB255EFAB100BFBBE5 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		B34EDE8C255E76F6009728BD /* ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBuilder.swift; sourceTree = "<group>"; };
 		B39F707D255EB6B800D4AB6F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		B39F7080255EB9F000D4AB6F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 			children = (
 				B39F7086255ED38700D4AB6F /* StockDetailsViewCotnroller.swift */,
 				B39F7089255ED5D000D4AB6F /* StockDetailsPresenter.swift */,
+				B3189DA9255EF33300BFBBE5 /* BarView.swift */,
+				B3189DAB255EFAB100BFBBE5 /* BarChartView.swift */,
 			);
 			path = StockDetailsModule;
 			sourceTree = "<group>";
@@ -298,11 +304,13 @@
 				B3AA9B07255EEC9900B78C25 /* Stock.swift in Sources */,
 				B314AE36255DA70600E1EA51 /* StockListViewController.swift in Sources */,
 				B314AE32255DA70600E1EA51 /* AppDelegate.swift in Sources */,
+				B3189DAA255EF33300BFBBE5 /* BarView.swift in Sources */,
 				B39F7081255EB9F000D4AB6F /* UIColor+Extensions.swift in Sources */,
 				B39F707E255EB6B800D4AB6F /* UIImage+Extensions.swift in Sources */,
 				B34EDE8D255E76F6009728BD /* ViewBuilder.swift in Sources */,
 				B3D0BFC8255E9B9C0098800F /* StockCell.swift in Sources */,
 				B39F7083255ECF2900D4AB6F /* ModulesBuilder.swift in Sources */,
+				B3189DAC255EFAB100BFBBE5 /* BarChartView.swift in Sources */,
 				B39F7087255ED38700D4AB6F /* StockDetailsViewCotnroller.swift in Sources */,
 				B39F7085255ECF6E00D4AB6F /* StockListPresenter.swift in Sources */,
 			);
