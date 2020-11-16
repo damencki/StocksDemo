@@ -1,6 +1,7 @@
 import Foundation
 
 protocol StockListPresenterProtocol: class {
+    func viewDidLoad()
     func viewWillAppear()
     func didSelect(stock: Stock)
 }
@@ -12,8 +13,20 @@ class StockListPresenter: StockListPresenterProtocol {
         self.view = view
     }
     
-    func viewWillAppear() {
+    func viewDidLoad() {
+        let stocks = Stub().getStocks()
         view?.update(stocks: Stub().getStocks())
+        stocks.forEach { stock in
+            print(stock.name)
+            print("")
+            print(stock.values)
+            print("maximumProfit")
+            print(stock.getProfit())
+            print("________\n")
+        }
+    }
+    
+    func viewWillAppear() {
     }
     
     func didSelect(stock: Stock) {

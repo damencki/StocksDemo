@@ -30,15 +30,26 @@ class BarView: UIView {
         }
     }
     
-    func update(value: Int, maximumValue: Int) {
+    func update(value: Int, maximumValue: Int, highlited: Bool) {
         self.value = value
         self.maximumValue = maximumValue
+        if highlited {
+            highliteFilledView()
+        }
         updateFilledView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         updateFilledView()
+    }
+    
+    private func highliteFilledView() {
+        filledView.backgroundColor = .cmykGreen
+        filledView.layer.shadowColor = UIColor.cmykGreen.cgColor
+        filledView.layer.shadowOpacity = 0.8
+        filledView.layer.shadowOffset = .zero
+        filledView.layer.shadowRadius = 5
     }
     
     private func updateFilledView() {

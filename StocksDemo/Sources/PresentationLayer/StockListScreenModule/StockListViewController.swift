@@ -26,6 +26,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
+        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
