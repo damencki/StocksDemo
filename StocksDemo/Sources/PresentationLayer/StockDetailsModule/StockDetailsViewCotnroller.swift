@@ -2,6 +2,7 @@ import SnapKit
 import UIKit
 
 protocol StockDetailsViewProtocol: class {
+    func setValuesCount(_ count: Int)
     func update(stock: Stock)
 }
 
@@ -29,7 +30,11 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
         presenter.update()
     }
     
+    func setValuesCount(_ count: Int) {
+        barCharView.barsCount = count
+    }
+    
     func update(stock: Stock) {
-        barCharView.update(stock: stock)
+        barCharView.update(values: stock.values)
     }
 }

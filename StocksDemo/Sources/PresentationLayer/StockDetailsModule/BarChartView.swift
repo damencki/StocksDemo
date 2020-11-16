@@ -1,11 +1,28 @@
 import UIKit
 
-class BarChartView: UIView {    
+class BarChartView: UIView {
     private lazy var stackView = UIStackView {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fillEqually
         $0.spacing = 10
+    }
+    
+    private lazy var barViews: [BarView] = []
+    
+    var barsCount: Int = 0 {
+        didSet {
+            stackView.arrangedSubviews.forEach {
+                stackView.removeArrangedSubview($0)
+            }
+            barViews = []
+            
+            for _ in 0 ..< barsCount {
+                let barView = BarView()
+                barViews.append(barView)
+                stackView.addArrangedSubview(barView)
+            }
+        }
     }
     
     override init(frame: CGRect) {
@@ -25,15 +42,12 @@ class BarChartView: UIView {
         }
     }
     
-    func update(stock: Stock) {
-        let buyingValueIndex =  stock.getProfit().buyingPriceIndex
-        let sellingValueIndex = stock.getProfit().sellingPriceIndex
-        stackView.arrangedSubviews.forEach {stackView.removeArrangedSubview($0)}
-        let views = stock.values.map { _ in BarView() }
-           views.forEach { stackView.addArrangedSubview($0) }
-           for index in 0 ..< stock.values.count {
-            let highlited = (index == buyingValueIndex) || (index == sellingValueIndex)
-            views[index].update(value: stock.values[index], maximumValue: 1000, highlited: highlited)
-           }
+    func update(values: [Int]) {
+        if values.count == barsCount {
+            for index in 0 ..< values.count {
+                barViews[index].update(value: values[index], maximumValue: 1000, highlited: false)
+            }
+        }
     }
 }
+

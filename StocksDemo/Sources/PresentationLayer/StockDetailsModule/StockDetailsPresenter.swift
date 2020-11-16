@@ -26,6 +26,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     }
     
     func viewDidLoad() {
+        view?.setValuesCount(stock.values.count)
         view?.update(stock: stock)
     }
     
