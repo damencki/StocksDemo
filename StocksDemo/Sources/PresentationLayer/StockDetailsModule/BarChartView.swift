@@ -42,10 +42,10 @@ class BarChartView: UIView {
         }
     }
     
-    func update(values: [Int]) {
-        if values.count == barsCount {
-            for index in 0 ..< values.count {
-                barViews[index].update(value: values[index], maximumValue: 1000, highlited: false)
+    func update(models: [BarViewModel]) {
+        if models.count == barsCount {
+            for index in 0 ..< models.count {
+                barViews[index].update(barViewModel: models[index], maximumValue: 1000)
             }
         }
     }

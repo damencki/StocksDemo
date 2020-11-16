@@ -35,6 +35,16 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     }
     
     func update(stock: Stock) {
-        barCharView.update(values: stock.values)
+        let buyingPriceIndex = stock.getProfit().buyingPriceIndex
+        let sellingPriceIndex = stock.getProfit().sellingPriceIndex
+
+        var barViewModels = [BarViewModel]()
+        
+        for index in 0 ..< stock.values.count {
+            let isHighlited = (buyingPriceIndex == index) || (sellingPriceIndex == index)
+            let barViewModel = BarViewModel(value: stock.values[index], isHighlited: isHighlited)
+            barViewModels.append(barViewModel)
+        }
+        barCharView.update(models: barViewModels)
     }
 }

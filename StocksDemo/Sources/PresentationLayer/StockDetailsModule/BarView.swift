@@ -1,6 +1,11 @@
 import SnapKit
 import UIKit
 
+struct BarViewModel {
+    let value: Int
+    let isHighlited: Bool
+}
+
 class BarView: UIView {
     private lazy var filledView = UIView {
         $0.backgroundColor = .filled
@@ -30,12 +35,10 @@ class BarView: UIView {
         }
     }
     
-    func update(value: Int, maximumValue: Int, highlited: Bool) {
-        self.value = value
+    func update(barViewModel: BarViewModel, maximumValue: Int) {
+        self.value = barViewModel.value
         self.maximumValue = maximumValue
-        if highlited {
-            highliteFilledView()
-        }
+        setupHighliting(isHighlited: barViewModel.isHighlited)
         updateFilledView()
     }
     
@@ -44,12 +47,12 @@ class BarView: UIView {
         updateFilledView()
     }
     
-    private func highliteFilledView() {
-        filledView.backgroundColor = .cmykGreen
-        filledView.layer.shadowColor = UIColor.cmykGreen.cgColor
-        filledView.layer.shadowOpacity = 0.8
-        filledView.layer.shadowOffset = .zero
-        filledView.layer.shadowRadius = 5
+    private func setupHighliting(isHighlited: Bool) {
+        filledView.backgroundColor = isHighlited ? .cmykGreen : .filled
+        filledView.layer.shadowColor = isHighlited ?  UIColor.cmykGreen.cgColor : nil
+        filledView.layer.shadowOpacity = isHighlited ? 0.8 : 0.0
+        filledView.layer.shadowOffset = isHighlited ? .zero : CGSize(width: 0.0, height: -3.0)
+        filledView.layer.shadowRadius = isHighlited ? 5 : 3
     }
     
     private func updateFilledView() {
