@@ -31,7 +31,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     
     func update() {
         let stocks = stockService.update()
-        if let stock = stocks.first { $0.id == stock.id } {
+        if let stock = stocks.first(where: { $0.id == stock.id }) {
             self.stock = stock
             view?.update(stock: stock)
         }
