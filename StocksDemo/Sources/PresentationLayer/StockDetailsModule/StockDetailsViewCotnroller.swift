@@ -22,11 +22,7 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
             $0.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(400)
         }
-    }
-        
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter.viewDidAppear()
+        presenter.viewDidLoad()
     }
     
     @objc private func didTapUpdate() {

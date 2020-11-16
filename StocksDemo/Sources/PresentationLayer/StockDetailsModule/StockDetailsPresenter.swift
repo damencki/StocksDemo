@@ -1,7 +1,7 @@
 import Foundation
 
 protocol StockDetailsPresenterProtocol: class {
-    func viewDidAppear()
+    func viewDidLoad()
     func update()
 }
 
@@ -25,7 +25,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         self.flowDelegate = flowDelegate
     }
     
-    func viewDidAppear() {
+    func viewDidLoad() {
         view?.update(stock: stock)
     }
     
