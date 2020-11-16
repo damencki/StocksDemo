@@ -13,6 +13,7 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdate))
         
         view.addSubview(barCharView)
         barCharView.snp.makeConstraints {
@@ -22,14 +23,14 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
             $0.height.equalTo(400)
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter.viewDidAppear()
+    }
+    
+    @objc private func didTapUpdate() {
+        presenter.update()
     }
     
     func update(stock: Stock) {

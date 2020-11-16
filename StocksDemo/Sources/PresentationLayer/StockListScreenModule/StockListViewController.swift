@@ -29,18 +29,18 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-    }
-    
     private func setupUI() {
         navigationItem.title = "Stock​ ​Exchange"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdateButton))
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    @objc private func didTapUpdateButton() {
+        presenter.didTapUpdate()
     }
     
     func update(stocks: [Stock]) {

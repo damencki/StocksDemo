@@ -8,9 +8,10 @@ enum Trend {
 
 struct Stock {
     let id: String
-    let values: [Int]
+    var values: [Int]
     let name: String
     let tickerName: String
+    var test = "Test"
     
     func getTrend() -> Trend {
         if values.count < 2 {
