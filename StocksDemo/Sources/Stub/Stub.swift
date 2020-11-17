@@ -34,7 +34,7 @@ class Stub {
         return stocks
     }
     
-    func generatePrices() -> [Price] {
+    private func generatePrices() -> [Price] {
         var prices = [Price]()
         for i in -10..<0 {
             guard let date = Calendar.current.date(byAdding: .day, value: i, to: Date()) else {
