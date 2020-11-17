@@ -3,6 +3,7 @@ import UIKit
 
 struct BarViewModel {
     let value: Int
+    let title: String
     let isHighlited: Bool
 }
 

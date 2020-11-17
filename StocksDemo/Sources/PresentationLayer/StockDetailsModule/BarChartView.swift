@@ -20,36 +20,53 @@ class BarChartView: UIView {
         $0.spacing = Constants.horizontalSpacing
     }
     
+    private lazy var titlesStackView = UIStackView {
+        $0.axis = .horizontal
+        $0.alignment = .fill
+        $0.distribution = .fillEqually
+        $0.spacing = Constants.horizontalSpacing
+    }
+    
     private lazy var barViews: [BarView] = []
     private lazy var nameLabels: [UILabel] = []
+    private lazy var titleLabels: [UILabel] = []
     
+    /// Barc charts count. Default value 0.
     var barsCount: Int = 0 {
         didSet {
-            barsStackView.arrangedSubviews.forEach {
-                barsStackView.removeArrangedSubview($0)
-            }
+            barsStackView.removeAllArangedSubviews()
             barViews = []
             
-            valuesStackView.arrangedSubviews.forEach {
-                barsStackView.removeArrangedSubview($0)
-            }
+            valuesStackView.removeAllArangedSubviews()
             nameLabels = []
+            
+            titlesStackView.removeAllArangedSubviews()
+            titleLabels = []
             
             for _ in 0 ..< barsCount {
                 let barView = BarView()
                 barViews.append(barView)
                 barsStackView.addArrangedSubview(barView)
                 
-                let nameLabel = UILabel {
+                let valueLabel = UILabel {
                     $0.font = .systemFont(ofSize: 10)
-                    $0.textColor = .black
                     $0.textAlignment = .center
                 }
-                nameLabels.append(nameLabel)
-                valuesStackView.addArrangedSubview(nameLabel)
+                nameLabels.append(valueLabel)
+                valuesStackView.addArrangedSubview(valueLabel)
+                
+                let titleLabel = UILabel {
+                    $0.font = .systemFont(ofSize: 10)
+                    $0.textAlignment = .center
+                }
+                titleLabels.append(titleLabel)
+                titlesStackView.addArrangedSubview(titleLabel)
             }
         }
     }
+    
+    /// Maximum value of bars. Default value is 1000
+    var maximumValue: Int = 1000
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,15 +87,22 @@ class BarChartView: UIView {
         addSubview(barsStackView)
         barsStackView.snp.makeConstraints {
             $0.top.equalTo(valuesStackView.snp.bottom).offset(Constants.verticalSpacing)
-            $0.leading.bottom.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        addSubview(titlesStackView)
+        titlesStackView.snp.makeConstraints {
+            $0.top.equalTo(barsStackView.snp.bottom).offset(Constants.verticalSpacing)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func update(models: [BarViewModel]) {
         if models.count == barsCount {
             for index in 0 ..< models.count {
-                barViews[index].update(barViewModel: models[index], maximumValue: 1000)
+                barViews[index].update(barViewModel: models[index], maximumValue: maximumValue)
                 nameLabels[index].text = String(models[index].value)
+                titleLabels[index].text = models[index].title
             }
         }
     }
