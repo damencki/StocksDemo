@@ -13,7 +13,7 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     private struct Constants {
         static let horizontalSpacing: CGFloat = 10
         static let verticalSpacing: CGFloat = 20
-        static let barChartViewHeight: CGFloat = 400
+        static let barChartViewHeight: CGFloat = 300
     }
     
     private lazy var scrollView = UIScrollView ()
