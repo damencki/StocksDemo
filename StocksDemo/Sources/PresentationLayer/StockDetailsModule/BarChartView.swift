@@ -31,6 +31,7 @@ class BarChartView: UIView {
     private lazy var nameLabels: [UILabel] = []
     private lazy var titleLabels: [UILabel] = []
     
+    /// Barc charts count. Default value 0.
     var barsCount: Int = 0 {
         didSet {
             barsStackView.removeAllArangedSubviews()
