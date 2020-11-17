@@ -35,7 +35,7 @@ class StockCell: UITableViewCell {
     }
     
     private lazy var separatorLineView = UIView {
-        $0.backgroundColor = .lightGray
+        $0.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
