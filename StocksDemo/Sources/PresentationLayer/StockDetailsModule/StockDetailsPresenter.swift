@@ -106,6 +106,6 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     
     private func descriptionText(from stock: Stock) -> String{
         let profit = getProfit(stock.prices.map{$0.value})
-        return "\(profit.maximumProfit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​selling​ ​on​ ​consecutive​ ​days. \n\nBuing price - \(profit.buingPrice)\nSellingPrice - \(profit.sellingPrice)"
+        return "\(profit.maximumProfit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​selling​ ​on​ ​consecutive​ ​days. \n\nBuing price - \(profit.buingPrice)\nSelling Price - \(profit.sellingPrice)"
     }
 }
