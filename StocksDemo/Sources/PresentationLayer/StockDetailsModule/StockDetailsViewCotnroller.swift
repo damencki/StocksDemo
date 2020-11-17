@@ -3,13 +3,13 @@ import UIKit
 
 protocol StockDetailsViewProtocol: class {
     func setValuesCount(_ count: Int)
-    func update(stock: Stock)
+    func updateBarChart(_ barViewModels: [BarViewModel])
 }
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
-    var presenter: StockDetailsPresenterProtocol!
-
     private lazy var barCharView = BarChartView()
+    
+    var presenter: StockDetailsPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +34,7 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
         barCharView.barsCount = count
     }
     
-    func update(stock: Stock) {
-        let buyingPriceIndex = stock.getProfit().buyingPriceIndex
-        let sellingPriceIndex = stock.getProfit().sellingPriceIndex
-
-        var barViewModels = [BarViewModel]()
-        
-        for index in 0 ..< stock.values.count {
-            let isHighlited = (buyingPriceIndex == index) || (sellingPriceIndex == index)
-            let barViewModel = BarViewModel(value: stock.values[index], isHighlited: isHighlited)
-            barViewModels.append(barViewModel)
-        }
+    func updateBarChart(_ barViewModels: [BarViewModel]) {
         barCharView.update(models: barViewModels)
     }
 }
