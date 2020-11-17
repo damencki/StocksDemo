@@ -8,6 +8,12 @@ protocol StockDetailsViewProtocol: class {
 }
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
+    private struct Constants {
+        static let horizontalSpacing = 10
+        static let verticalSpacing = 20
+        static let barChartViewHeight = 400
+    }
+    
     private lazy var barCharView = BarChartView()
     
     var presenter: StockDetailsPresenterProtocol!
@@ -20,9 +26,9 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
         view.addSubview(barCharView)
         barCharView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(400)
+            $0.leading.equalToSuperview().offset(Constants.horizontalSpacing)
+            $0.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
+            $0.height.equalTo(Constants.barChartViewHeight)
         }
         presenter.viewDidLoad()
     }
