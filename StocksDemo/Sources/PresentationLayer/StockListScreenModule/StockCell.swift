@@ -12,17 +12,14 @@ class StockCell: UITableViewCell {
     
     private lazy var nameLabel = UILabel {
         $0.font = .systemFont(ofSize: 14)
-        $0.textColor = .black
     }
     
     private lazy var tickerNameLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
-        $0.textColor = .black
     }
     
     private lazy var valueLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
-        $0.textColor = .black
         $0.textAlignment = .right
     }
     
