@@ -46,6 +46,7 @@ class StockCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = .clear
         selectionStyle = .none
         
         contentView.addSubview(nameLabel)

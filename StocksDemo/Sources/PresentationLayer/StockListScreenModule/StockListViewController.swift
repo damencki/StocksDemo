@@ -12,6 +12,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         $0.delegate = self
         $0.register(StockCell.self, forCellReuseIdentifier: String(describing: StockCell.self))
         $0.separatorStyle = .none
+        $0.backgroundColor = .clear
     }
     
     private var stocks: [Stock] = [] {
@@ -24,7 +25,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setupUI()
         presenter.viewDidLoad()
     }

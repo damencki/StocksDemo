@@ -29,14 +29,14 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     
     private lazy var nameLabel = UILabel {
         $0.font = .systemFont(ofSize: 20)
-        $0.textColor = UIColor.black.withAlphaComponent(0.8)
+        $0.textColor = .label
     }
     
     private lazy var barCharView = BarChartView()
     
     private lazy var descriptionLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
-        $0.textColor = UIColor.black.withAlphaComponent(0.9)
+        $0.textColor = .label
         $0.numberOfLines = 0
     }
     
@@ -44,7 +44,7 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdate))
         setupUI()
         presenter.viewDidLoad()
