@@ -3,7 +3,9 @@ import Foundation
 class Stub {
     private var stocks: [Stock] = []
     
-    init() {
+    static let shared = Stub()
+    
+    private init() {
         self.stocks = self.generateStocks()
     }
     
@@ -25,8 +27,13 @@ class Stub {
         return values
     }
     
-    func update() {
-        stocks = generateStocks()
+    /// Update stocks
+    /// - Returns: Genereted new values of 
+    func update() -> [Stock] {
+        for index in 0..<stocks.count {
+            stocks[index].values = generateRandomValues()
+        }
+        return stocks
     }
     
     func getStocks() -> [Stock] {

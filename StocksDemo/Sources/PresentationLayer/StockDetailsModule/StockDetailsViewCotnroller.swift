@@ -2,17 +2,20 @@ import SnapKit
 import UIKit
 
 protocol StockDetailsViewProtocol: class {
-    func update(stock: Stock)
+    func setValuesCount(_ count: Int)
+    func updateBarChart(_ barViewModels: [BarViewModel])
+    func updateNavigationTitle(_ title: String)
 }
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
-    var presenter: StockDetailsPresenterProtocol!
-
     private lazy var barCharView = BarChartView()
+    
+    var presenter: StockDetailsPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdate))
         
         view.addSubview(barCharView)
         barCharView.snp.makeConstraints {
@@ -21,18 +24,22 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
             $0.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(400)
         }
+        presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc private func didTapUpdate() {
+        presenter.update()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter.viewDidAppear()
+    func setValuesCount(_ count: Int) {
+        barCharView.barsCount = count
     }
     
-    func update(stock: Stock) {
-        barCharView.update(stock: stock)
+    func updateBarChart(_ barViewModels: [BarViewModel]) {
+        barCharView.update(models: barViewModels)
+    }
+    
+    func updateNavigationTitle(_ title: String) {
+        navigationItem.title = title
     }
 }
