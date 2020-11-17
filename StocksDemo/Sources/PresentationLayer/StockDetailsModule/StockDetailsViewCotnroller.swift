@@ -11,17 +11,28 @@ protocol StockDetailsViewProtocol: class {
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     private struct Constants {
-        static let horizontalSpacing = 10
-        static let verticalSpacing = 20
-        static let barChartViewHeight = 400
+        static let horizontalSpacing: CGFloat = 10
+        static let verticalSpacing: CGFloat = 20
+        static let barChartViewHeight: CGFloat = 400
     }
     
-    private lazy var barCharView = BarChartView()
+    private lazy var scrollView = UIScrollView ()
+    
+    private lazy var stackView = UIStackView {
+        $0.alignment = .fill
+        $0.distribution = .equalSpacing
+        $0.axis = .vertical
+        $0.spacing = Constants.verticalSpacing
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: Constants.verticalSpacing, left: Constants.horizontalSpacing, bottom: Constants.verticalSpacing, right: Constants.horizontalSpacing)
+    }
     
     private lazy var nameLabel = UILabel {
         $0.font = .systemFont(ofSize: 20)
         $0.textColor = UIColor.black.withAlphaComponent(0.8)
     }
+    
+    private lazy var barCharView = BarChartView()
     
     private lazy var descriptionLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
@@ -40,25 +51,22 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     }
     
     private func setupUI() {
-        view.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(Constants.horizontalSpacing)
-            $0.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        view.addSubview(barCharView)
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.edges.width.equalToSuperview()
+        }
+        
+        stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(barCharView)
         barCharView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.verticalSpacing)
-            $0.leading.trailing.equalTo(nameLabel)
             $0.height.equalTo(Constants.barChartViewHeight)
         }
-        
-        view.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(nameLabel)
-            $0.top.equalTo(barCharView.snp.bottom).offset(Constants.verticalSpacing)
-        }
+        stackView.addArrangedSubview(descriptionLabel)
     }
     
     @objc private func didTapUpdate() {
