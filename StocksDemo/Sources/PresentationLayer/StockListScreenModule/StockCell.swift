@@ -111,7 +111,7 @@ class StockCell: UITableViewCell {
         nameLabel.text = stock.name
         tickerNameLabel.text = stock.tickerName
         
-        guard let lastStockValue = stock.values.last else {
+        guard let lastStockValue = stock.prices.last?.value else {
             return
         }
         switch stock.getTrend() {

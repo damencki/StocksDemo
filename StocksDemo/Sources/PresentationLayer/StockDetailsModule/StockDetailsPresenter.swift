@@ -64,8 +64,8 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
       }
     
     func viewDidLoad() {
-        view?.setValuesCount(stock.values.count)
-        view?.updateBarChart(convert(stock: stock))
+        view?.setValuesCount(stock.prices.count)
+        view?.updateBarChart(barViewModel(from: stock))
         view?.updateNavigationTitle(stock.tickerName)
     }
     
@@ -76,21 +76,28 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         }
         self.stock = stock
         
-        view?.updateBarChart(convert(stock: stock))
+        view?.updateBarChart(barViewModel(from: stock))
         flowDelegate?.didStocksUpdate()
     }
     
-    private func convert(stock: Stock) -> [BarViewModel] {
-        let buyingPriceIndex = getProfit(stock.values).buyingPriceIndex
-        let sellingPriceIndex = getProfit(stock.values).sellingPriceIndex
+    private func barViewModel(from stock: Stock) -> [BarViewModel] {
+        let buyingPriceIndex = getProfit(stock.prices.map { $0.value }).buyingPriceIndex
+        let sellingPriceIndex = getProfit(stock.prices.map { $0.value }).sellingPriceIndex
 
         var barViewModels = [BarViewModel]()
         
-        for index in 0 ..< stock.values.count {
+        for index in 0 ..< stock.prices.count {
             let isHighlited = (buyingPriceIndex == index) || (sellingPriceIndex == index)
-            let barViewModel = BarViewModel(value: stock.values[index], isHighlited: isHighlited)
+            let price = stock.prices[index]
+            let barViewModel = BarViewModel(value: price.value, title: string(from: price.date), isHighlited: isHighlited)
             barViewModels.append(barViewModel)
         }
         return barViewModels
+    }
+    
+    private func string(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM"
+        return dateFormatter.string(from: date)
     }
 }

@@ -8,16 +8,16 @@ enum Trend {
 
 struct Stock {
     let id: String
-    var values: [Int]
+    var prices: [Price]
     let name: String
     let tickerName: String
     
     func getTrend() -> Trend {
-        if values.count < 2 {
+        if prices.count < 2 {
             return .equal
-        } else if values[values.count - 1] > values[values.count - 2] {
+        } else if prices[prices.count - 1].value > prices[prices.count - 2].value {
             return .up
-        } else if values[values.count - 1] == values[values.count - 2] {
+        } else if prices[prices.count - 1].value == prices[prices.count - 2].value {
             return .equal
         } else {
             return .down
