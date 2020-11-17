@@ -25,14 +25,10 @@ class BarChartView: UIView {
     
     var barsCount: Int = 0 {
         didSet {
-            barsStackView.arrangedSubviews.forEach {
-                barsStackView.removeArrangedSubview($0)
-            }
+            barsStackView.removeAllArangedSubviews()
             barViews = []
             
-            valuesStackView.arrangedSubviews.forEach {
-                barsStackView.removeArrangedSubview($0)
-            }
+            valuesStackView.removeAllArangedSubviews()
             nameLabels = []
             
             for _ in 0 ..< barsCount {
