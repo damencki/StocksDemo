@@ -66,6 +66,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     func viewDidLoad() {
         view?.setValuesCount(stock.values.count)
         view?.updateBarChart(convert(stock: stock))
+        view?.updateNavigationTitle(stock.tickerName)
     }
     
     func update() {

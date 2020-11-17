@@ -4,6 +4,7 @@ import UIKit
 protocol StockDetailsViewProtocol: class {
     func setValuesCount(_ count: Int)
     func updateBarChart(_ barViewModels: [BarViewModel])
+    func updateNavigationTitle(_ title: String)
 }
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
@@ -36,5 +37,9 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     
     func updateBarChart(_ barViewModels: [BarViewModel]) {
         barCharView.update(models: barViewModels)
+    }
+    
+    func updateNavigationTitle(_ title: String) {
+        navigationItem.title = title
     }
 }
