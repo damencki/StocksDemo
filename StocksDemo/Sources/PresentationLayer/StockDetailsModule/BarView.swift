@@ -7,6 +7,10 @@ struct BarViewModel {
 }
 
 class BarView: UIView {
+    private struct Constants {
+        static let animationDuration: TimeInterval = 0.3
+    }
+    
     private lazy var filledView = UIView {
         $0.backgroundColor = .filled
     }
@@ -48,17 +52,19 @@ class BarView: UIView {
     }
     
     private func setupHighliting(isHighlited: Bool) {
-        filledView.backgroundColor = isHighlited ? .cmykGreen : .filled
-        filledView.layer.shadowColor = isHighlited ?  UIColor.cmykGreen.cgColor : nil
-        filledView.layer.shadowOpacity = isHighlited ? 0.8 : 0.0
-        filledView.layer.shadowOffset = isHighlited ? .zero : CGSize(width: 0.0, height: -3.0)
-        filledView.layer.shadowRadius = isHighlited ? 5 : 3
+        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+            self?.filledView.backgroundColor = isHighlited ? .cmykGreen : .filled
+            self?.filledView.layer.shadowColor = isHighlited ?  UIColor.cmykGreen.cgColor : nil
+            self?.filledView.layer.shadowOpacity = isHighlited ? 0.8 : 0.0
+            self?.filledView.layer.shadowOffset = isHighlited ? .zero : CGSize(width: 0.0, height: -3.0)
+            self?.filledView.layer.shadowRadius = isHighlited ? 5 : 3
+        }
     }
     
     private func updateFilledView() {
         let totalHeight = bounds.height
         let filledHeight = (CGFloat(integerLiteral: value) * totalHeight) / CGFloat(integerLiteral: maximumValue)
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.topFilledViewConstraint?.update(inset: filledHeight)
             self.layoutIfNeeded()
         }
