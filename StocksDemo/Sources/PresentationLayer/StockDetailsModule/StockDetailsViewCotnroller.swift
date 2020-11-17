@@ -6,6 +6,7 @@ protocol StockDetailsViewProtocol: class {
     func updateBarChart(_ barViewModels: [BarViewModel])
     func updateNavigationTitle(_ title: String)
     func updateNameLabel(text: String)
+    func updateDescriptionLabel(text: String)
 }
 
 class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
@@ -20,6 +21,12 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     private lazy var nameLabel = UILabel {
         $0.font = .systemFont(ofSize: 20)
         $0.textColor = UIColor.black.withAlphaComponent(0.8)
+    }
+    
+    private lazy var descriptionLabel = UILabel {
+        $0.font = .systemFont(ofSize: 16)
+        $0.textColor = UIColor.black.withAlphaComponent(0.9)
+        $0.numberOfLines = 0
     }
     
     var presenter: StockDetailsPresenterProtocol!
@@ -46,6 +53,12 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
             $0.leading.trailing.equalTo(nameLabel)
             $0.height.equalTo(Constants.barChartViewHeight)
         }
+        
+        view.addSubview(descriptionLabel)
+        descriptionLabel.snp.makeConstraints {
+            $0.leading.trailing.equalTo(nameLabel)
+            $0.top.equalTo(barCharView.snp.bottom).offset(Constants.verticalSpacing)
+        }
     }
     
     @objc private func didTapUpdate() {
@@ -66,5 +79,9 @@ class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
     
     func updateNameLabel(text: String) {
         nameLabel.text = text
+    }
+    
+    func updateDescriptionLabel(text: String) {
+        descriptionLabel.text = text
     }
 }

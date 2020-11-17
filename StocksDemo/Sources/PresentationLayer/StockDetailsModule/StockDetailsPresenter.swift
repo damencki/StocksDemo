@@ -25,49 +25,12 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         self.flowDelegate = flowDelegate
     }
     
-    private func getProfit(_ values: [Int]) -> (maximumProfit:Int, buingPrice: Int, sellingPrice: Int, buyingPriceIndex: Int, sellingPriceIndex: Int) {
-          var minimalStockPrice = values[0]
-          let maximumStockPrice = values[1]
-          var maximumProfit = maximumStockPrice - minimalStockPrice
-          var buingPrice = minimalStockPrice
-          var sellingPrice = maximumStockPrice
-        
-          var potentilBuyingPriceIndex = 0
-          var buyingPriceIndex = potentilBuyingPriceIndex
-          
-          var sellingPriceIndex = 1
-          
-          for index in 1..<values.count {
-              let currentPrice = values[index]
-              let potentialProfit = currentPrice - minimalStockPrice
-              
-              if potentialProfit > maximumProfit {
-                  maximumProfit = potentialProfit
-                  //set buying price
-                  buingPrice = minimalStockPrice
-                  
-                  //set selling price
-                  sellingPrice = currentPrice
-                  sellingPriceIndex = index
-                  buyingPriceIndex = potentilBuyingPriceIndex
-              }
-              if currentPrice < minimalStockPrice {
-                  minimalStockPrice = currentPrice
-                  potentilBuyingPriceIndex = index
-              }
-          }
-          return (maximumProfit: maximumProfit,
-                  buingPrice: buingPrice,
-                  sellingPrice: sellingPrice,
-                  buyingPriceIndex: buyingPriceIndex,
-                  sellingPriceIndex: sellingPriceIndex)
-      }
-    
     func viewDidLoad() {
         view?.setValuesCount(stock.prices.count)
         view?.updateBarChart(barViewModel(from: stock))
         view?.updateNavigationTitle(stock.tickerName)
         view?.updateNameLabel(text: stock.name)
+        view?.updateDescriptionLabel(text: descriptionText(from: stock))
     }
     
     func update() {
@@ -78,8 +41,47 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         self.stock = stock
         
         view?.updateBarChart(barViewModel(from: stock))
+        view?.updateDescriptionLabel(text: descriptionText(from: stock))
         flowDelegate?.didStocksUpdate()
     }
+    
+    private func getProfit(_ values: [Int]) -> (maximumProfit:Int, buingPrice: Int, sellingPrice: Int, buyingPriceIndex: Int, sellingPriceIndex: Int) {
+            var minimalStockPrice = values[0]
+            let maximumStockPrice = values[1]
+            var maximumProfit = maximumStockPrice - minimalStockPrice
+            var buingPrice = minimalStockPrice
+            var sellingPrice = maximumStockPrice
+          
+            var potentilBuyingPriceIndex = 0
+            var buyingPriceIndex = potentilBuyingPriceIndex
+            
+            var sellingPriceIndex = 1
+            
+            for index in 1..<values.count {
+                let currentPrice = values[index]
+                let potentialProfit = currentPrice - minimalStockPrice
+                
+                if potentialProfit > maximumProfit {
+                    maximumProfit = potentialProfit
+                    //set buying price
+                    buingPrice = minimalStockPrice
+                    
+                    //set selling price
+                    sellingPrice = currentPrice
+                    sellingPriceIndex = index
+                    buyingPriceIndex = potentilBuyingPriceIndex
+                }
+                if currentPrice < minimalStockPrice {
+                    minimalStockPrice = currentPrice
+                    potentilBuyingPriceIndex = index
+                }
+            }
+            return (maximumProfit: maximumProfit,
+                    buingPrice: buingPrice,
+                    sellingPrice: sellingPrice,
+                    buyingPriceIndex: buyingPriceIndex,
+                    sellingPriceIndex: sellingPriceIndex)
+        }
     
     private func barViewModel(from stock: Stock) -> [BarViewModel] {
         let buyingPriceIndex = getProfit(stock.prices.map { $0.value }).buyingPriceIndex
@@ -100,5 +102,10 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM"
         return dateFormatter.string(from: date)
+    }
+    
+    private func descriptionText(from stock: Stock) -> String{
+        let profit = getProfit(stock.prices.map{$0.value})
+        return "\(profit.maximumProfit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​selling​ ​on​ ​consecutive​ ​days. \n\nBuing price - \(profit.buingPrice)\nSellingPrice - \(profit.sellingPrice)"
     }
 }
