@@ -47,6 +47,9 @@ class BarChartView: UIView {
         }
     }
     
+    /// Maximum value of bars. Default value is 1000
+    var maximumValue: Int = 1000
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -73,7 +76,7 @@ class BarChartView: UIView {
     func update(models: [BarViewModel]) {
         if models.count == barsCount {
             for index in 0 ..< models.count {
-                barViews[index].update(barViewModel: models[index], maximumValue: 1000)
+                barViews[index].update(barViewModel: models[index], maximumValue: maximumValue)
                 nameLabels[index].text = String(models[index].value)
             }
         }
