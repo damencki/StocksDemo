@@ -17,14 +17,6 @@ class StockListPresenter: StockListPresenterProtocol {
     
     func viewDidLoad() {
         view?.update(stocks: stocksService.getStocks())
-//        stocks.forEach { stock in
-//            print(stock.name)
-//            print("")
-//            print(stock.values)
-//            print("maximumProfit")
-//            print(stock.getProfit())
-//            print("________\n")
-//        }
     }
     
     func didSelect(stock: Stock) {
