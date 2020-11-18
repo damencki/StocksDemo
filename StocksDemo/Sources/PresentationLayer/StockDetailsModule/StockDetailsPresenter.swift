@@ -31,26 +31,6 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         self.flowDelegate = flowDelegate
     }
     
-    func viewDidLoad() {
-        view?.setValuesCount(stock.prices.count)
-        view?.updateBarChart(barViewModels(from: stock))
-        view?.updateNavigationTitle(stock.tickerName)
-        view?.updateNameLabel(text: stock.name)
-        view?.updateDescriptionLabel(text: descriptionText(from: stock))
-    }
-    
-    func update() {
-        let stocks = stockService.update()
-        guard let stock = stocks.first(where: { $0.id == stock.id })  else {
-            return
-        }
-        self.stock = stock
-        
-        view?.updateBarChart(barViewModels(from: stock))
-        view?.updateDescriptionLabel(text: descriptionText(from: stock))
-        flowDelegate?.didStocksUpdate()
-    }
-    
     private func barViewModels(from stock: Stock) -> [BarViewModel] {
         let profits = getProfits(values: stock.prices.map { $0.value})
         let higlitedIndexes = profits.sorted {$0.profit > $1.profit}.prefix(2).flatMap { [$0.buyingIndex, $0.sellingIndex] }
@@ -77,7 +57,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         return "\(profit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​by selling​ ​on​ ​consecutive​ ​days."
     }
     
-    func getProfits(values: [Int]) -> [StockProfit] {
+    private func getProfits(values: [Int]) -> [StockProfit] {
         let null = -1
         
         var stockProfits: [StockProfit] = []
@@ -107,4 +87,24 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         }
         return stockProfits
     }
+    
+    func viewDidLoad() {
+         view?.setValuesCount(stock.prices.count)
+         view?.updateBarChart(barViewModels(from: stock))
+         view?.updateNavigationTitle(stock.tickerName)
+         view?.updateNameLabel(text: stock.name)
+         view?.updateDescriptionLabel(text: descriptionText(from: stock))
+     }
+     
+     func update() {
+         let stocks = stockService.update()
+         guard let stock = stocks.first(where: { $0.id == stock.id })  else {
+             return
+         }
+         self.stock = stock
+         
+         view?.updateBarChart(barViewModels(from: stock))
+         view?.updateDescriptionLabel(text: descriptionText(from: stock))
+         flowDelegate?.didStocksUpdate()
+     }
 }
