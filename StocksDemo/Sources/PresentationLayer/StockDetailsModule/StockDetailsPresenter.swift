@@ -9,6 +9,12 @@ protocol StockDetailsPresenterFlowDelegate: class {
     func didStocksUpdate()
 }
 
+struct StockProfit {
+    let buyingIndex: Int
+    let sellingIndex: Int
+    let profit: Int
+}
+
 class StockDetailsPresenter: StockDetailsPresenterProtocol {
     private weak var view: StockDetailsViewProtocol?
     private var stock: Stock
@@ -27,7 +33,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     
     func viewDidLoad() {
         view?.setValuesCount(stock.prices.count)
-        view?.updateBarChart(barViewModel(from: stock))
+        view?.updateBarChart(barViewModels(from: stock))
         view?.updateNavigationTitle(stock.tickerName)
         view?.updateNameLabel(text: stock.name)
         view?.updateDescriptionLabel(text: descriptionText(from: stock))
@@ -40,59 +46,21 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         }
         self.stock = stock
         
-        view?.updateBarChart(barViewModel(from: stock))
+        view?.updateBarChart(barViewModels(from: stock))
         view?.updateDescriptionLabel(text: descriptionText(from: stock))
         flowDelegate?.didStocksUpdate()
     }
     
-    private func getProfit(_ values: [Int]) -> (maximumProfit:Int, buingPrice: Int, sellingPrice: Int, buyingPriceIndex: Int, sellingPriceIndex: Int) {
-            var minimalStockPrice = values[0]
-            let maximumStockPrice = values[1]
-            var maximumProfit = maximumStockPrice - minimalStockPrice
-            var buingPrice = minimalStockPrice
-            var sellingPrice = maximumStockPrice
-          
-            var potentilBuyingPriceIndex = 0
-            var buyingPriceIndex = potentilBuyingPriceIndex
-            
-            var sellingPriceIndex = 1
-            
-            for index in 1..<values.count {
-                let currentPrice = values[index]
-                let potentialProfit = currentPrice - minimalStockPrice
-                
-                if potentialProfit > maximumProfit {
-                    maximumProfit = potentialProfit
-                    //set buying price
-                    buingPrice = minimalStockPrice
-                    
-                    //set selling price
-                    sellingPrice = currentPrice
-                    sellingPriceIndex = index
-                    buyingPriceIndex = potentilBuyingPriceIndex
-                }
-                if currentPrice < minimalStockPrice {
-                    minimalStockPrice = currentPrice
-                    potentilBuyingPriceIndex = index
-                }
-            }
-            return (maximumProfit: maximumProfit,
-                    buingPrice: buingPrice,
-                    sellingPrice: sellingPrice,
-                    buyingPriceIndex: buyingPriceIndex,
-                    sellingPriceIndex: sellingPriceIndex)
-        }
-    
-    private func barViewModel(from stock: Stock) -> [BarViewModel] {
-        let buyingPriceIndex = getProfit(stock.prices.map { $0.value }).buyingPriceIndex
-        let sellingPriceIndex = getProfit(stock.prices.map { $0.value }).sellingPriceIndex
-
-        var barViewModels = [BarViewModel]()
+    private func barViewModels(from stock: Stock) -> [BarViewModel] {
+        let profits = getProfits(values: stock.prices.map { $0.value})
+        let higlitedIndexes = profits.sorted {$0.profit > $1.profit}.prefix(2).flatMap { [$0.buyingIndex, $0.sellingIndex] }
         
+        var barViewModels = [BarViewModel]()
         for index in 0 ..< stock.prices.count {
-            let isHighlited = (buyingPriceIndex == index) || (sellingPriceIndex == index)
             let price = stock.prices[index]
-            let barViewModel = BarViewModel(value: price.value, title: string(from: price.date), isHighlited: isHighlited)
+            let barViewModel = BarViewModel(value: price.value,
+                                            title: string(from: price.date),
+                                            isHighlited: higlitedIndexes.contains(index))
             barViewModels.append(barViewModel)
         }
         return barViewModels
@@ -105,7 +73,39 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     }
     
     private func descriptionText(from stock: Stock) -> String{
-        let profit = getProfit(stock.prices.map{$0.value})
-        return "\(profit.maximumProfit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​selling​ ​on​ ​consecutive​ ​days. \n\nBuing price - \(profit.buingPrice)\nSelling Price - \(profit.sellingPrice)"
+        let profit = getProfits(values: stock.prices.map{$0.value}).compactMap{$0.profit}.reduce(0, +)
+        return "\(profit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​by selling​ ​on​ ​consecutive​ ​days."
+    }
+    
+    func getProfits(values: [Int]) -> [StockProfit] {
+        let null = -1
+        
+        var stockProfits: [StockProfit] = []
+        var currentLocalMinimum: Int = values[0]
+        var localMinimumIndex: Int = 0
+        
+        for index in 1..<values.count {
+            if (values[index] <= values[index - 1]) && currentLocalMinimum != null {
+                
+                let currentProfit = values[index - 1] - currentLocalMinimum;
+                if currentProfit > 0 {
+                    stockProfits.append(StockProfit(buyingIndex: localMinimumIndex, sellingIndex: (index - 1), profit: currentProfit))
+                }
+                currentLocalMinimum = null
+                localMinimumIndex = null
+            }
+            
+            if (values[index] > values[index - 1]) {
+                if currentLocalMinimum == null {
+                    currentLocalMinimum = values[index - 1];
+                    localMinimumIndex = index - 1;
+                }
+                
+                if index == (values.count - 1) {
+                    stockProfits.append(StockProfit(buyingIndex: localMinimumIndex, sellingIndex: index, profit: (values[index] - currentLocalMinimum)))
+                }
+            }
+        }
+        return stockProfits
     }
 }
