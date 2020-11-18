@@ -1,6 +1,14 @@
 import Foundation
 
-class Stub {
+protocol StubProtocol {
+    func getStocks() -> [Stock]
+    
+    /// Update stocks
+    /// - Returns: Stocks with updated prices
+    func update() -> [Stock]
+}
+
+class Stub: StubProtocol {
     private var stocks: [Stock] = []
     
     init() {
@@ -17,24 +25,9 @@ class Stub {
         return stocks
     }
     
-    /// Update stocks
-    /// - Returns: Genereted new values of 
-    func update() -> [Stock] {
-        for stockIndex in 0..<stocks.count {
-            for priceIndex in 0..<stocks[stockIndex].prices.count {
-                stocks[stockIndex].prices[priceIndex].value = Int.random(in: 0...999)
-            }
-        }
-        return stocks
-    }
-    
-    func getStocks() -> [Stock] {
-        return stocks
-    }
-    
     private func generatePrices() -> [Price] {
         var prices = [Price]()
-        for i in -10..<0 {
+        for i in -9...0 {
             guard let date = Calendar.current.date(byAdding: .day, value: i, to: Date()) else {
                 continue
             }
@@ -42,5 +35,18 @@ class Stub {
             prices.append(price)
         }
         return prices
+    }
+    
+    func getStocks() -> [Stock] {
+        return stocks
+    }
+    
+    func update() -> [Stock] {
+        for stockIndex in 0..<stocks.count {
+            for priceIndex in 0..<stocks[stockIndex].prices.count {
+                stocks[stockIndex].prices[priceIndex].value = Int.random(in: 0...999)
+            }
+        }
+        return stocks
     }
 }
