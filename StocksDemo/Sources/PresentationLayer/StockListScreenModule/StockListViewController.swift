@@ -63,7 +63,6 @@ extension StockListViewController: UITableViewDataSource {
         guard let stockCell = cell as? StockCell else {
             return cell
         }
-        stockCell.reset()
         stockCell.update(stocks[indexPath.row])
         return stockCell
     }

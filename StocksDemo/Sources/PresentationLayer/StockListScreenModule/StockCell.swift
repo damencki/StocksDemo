@@ -98,7 +98,7 @@ class StockCell: UITableViewCell {
         trendImageView.image = image
     }
     
-    func reset() {
+    private func reset() {
         nameLabel.text = nil
         tickerNameLabel.text = nil
         valueLabel.text = nil
@@ -106,6 +106,7 @@ class StockCell: UITableViewCell {
     }
     
     func update(_ stock: Stock) {
+        reset()
         nameLabel.text = stock.name
         tickerNameLabel.text = stock.tickerName
         
@@ -118,7 +119,7 @@ class StockCell: UITableViewCell {
         case .down:
             updateTrend(value: String(lastStockValue), color: .cmykRed, image: .downIcon)
         case .equal:
-            updateTrend(value: String(lastStockValue), color: .black, image: nil)
+            updateTrend(value: String(lastStockValue), color: .label, image: nil)
         }
     }
 }
