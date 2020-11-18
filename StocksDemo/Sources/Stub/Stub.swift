@@ -3,9 +3,7 @@ import Foundation
 class Stub {
     private var stocks: [Stock] = []
     
-    static let shared = Stub()
-    
-    private init() {
+    init() {
         self.stocks = self.generateStocks()
     }
     

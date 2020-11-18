@@ -6,7 +6,7 @@ protocol StocksServiceProtocol {
 }
 
 class StocksService: StocksServiceProtocol {
-    private let stub = Stub.shared
+    private let stub = Stub()
     
     func getStocks() -> [Stock] {
         return stub.getStocks()
