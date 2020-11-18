@@ -21,7 +21,7 @@
 		B39F7081255EB9F000D4AB6F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7080255EB9F000D4AB6F /* UIColor+Extensions.swift */; };
 		B39F7083255ECF2900D4AB6F /* ModulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7082255ECF2900D4AB6F /* ModulesBuilder.swift */; };
 		B39F7085255ECF6E00D4AB6F /* StockListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7084255ECF6E00D4AB6F /* StockListPresenter.swift */; };
-		B39F7087255ED38700D4AB6F /* StockDetailsViewCotnroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7086255ED38700D4AB6F /* StockDetailsViewCotnroller.swift */; };
+		B39F7087255ED38700D4AB6F /* StockDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7086255ED38700D4AB6F /* StockDetailsViewController.swift */; };
 		B39F708A255ED5D000D4AB6F /* StockDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39F7089255ED5D000D4AB6F /* StockDetailsPresenter.swift */; };
 		B3AA9B06255EEC9900B78C25 /* Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AA9B04255EEC9900B78C25 /* Stub.swift */; };
 		B3AA9B07255EEC9900B78C25 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AA9B05255EEC9900B78C25 /* Stock.swift */; };
@@ -47,7 +47,7 @@
 		B39F7080255EB9F000D4AB6F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		B39F7082255ECF2900D4AB6F /* ModulesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBuilder.swift; sourceTree = "<group>"; };
 		B39F7084255ECF6E00D4AB6F /* StockListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListPresenter.swift; sourceTree = "<group>"; };
-		B39F7086255ED38700D4AB6F /* StockDetailsViewCotnroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewCotnroller.swift; sourceTree = "<group>"; };
+		B39F7086255ED38700D4AB6F /* StockDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewController.swift; sourceTree = "<group>"; };
 		B39F7089255ED5D000D4AB6F /* StockDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsPresenter.swift; sourceTree = "<group>"; };
 		B3AA9B04255EEC9900B78C25 /* Stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stub.swift; sourceTree = "<group>"; };
 		B3AA9B05255EEC9900B78C25 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 				B3189DAB255EFAB100BFBBE5 /* BarChartView.swift */,
 				B3189DA9255EF33300BFBBE5 /* BarView.swift */,
 				B39F7089255ED5D000D4AB6F /* StockDetailsPresenter.swift */,
-				B39F7086255ED38700D4AB6F /* StockDetailsViewCotnroller.swift */,
+				B39F7086255ED38700D4AB6F /* StockDetailsViewController.swift */,
 			);
 			path = StockDetailsModule;
 			sourceTree = "<group>";
@@ -347,7 +347,7 @@
 				B3D0BFC8255E9B9C0098800F /* StockCell.swift in Sources */,
 				B39F7083255ECF2900D4AB6F /* ModulesBuilder.swift in Sources */,
 				B3189DAC255EFAB100BFBBE5 /* BarChartView.swift in Sources */,
-				B39F7087255ED38700D4AB6F /* StockDetailsViewCotnroller.swift in Sources */,
+				B39F7087255ED38700D4AB6F /* StockDetailsViewController.swift in Sources */,
 				B39F7085255ECF6E00D4AB6F /* StockListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,7 @@ protocol StockDetailsViewProtocol: class {
     func updateDescriptionLabel(text: String)
 }
 
-class StockDetailsViewCotnroller: UIViewController, StockDetailsViewProtocol {
+class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
     private struct Constants {
         static let horizontalSpacing: CGFloat = 10
         static let verticalSpacing: CGFloat = 20

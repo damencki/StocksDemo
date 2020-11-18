@@ -17,7 +17,7 @@ class ModulesBuilder: ModulesBuilderProtocol {
     static func createStockDetailsModule(stock: Stock,
                                          stocksService: StocksServiceProtocol,
                                          flowDelegate: StockDetailsPresenterFlowDelegate?) -> UIViewController {
-        let view = StockDetailsViewCotnroller()
+        let view = StockDetailsViewController()
         let presenter = StockDetailsPresenter(view: view,
                                               stock: stock,
                                               stockService: stocksService,
