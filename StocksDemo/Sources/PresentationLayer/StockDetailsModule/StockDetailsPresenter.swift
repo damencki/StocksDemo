@@ -86,7 +86,6 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         
         for index in 1..<values.count {
             if (values[index] <= values[index - 1]) && currentLocalMinimum != null {
-                
                 let currentProfit = values[index - 1] - currentLocalMinimum;
                 if currentProfit > 0 {
                     stockProfits.append(StockProfit(buyingIndex: localMinimumIndex, sellingIndex: (index - 1), profit: currentProfit))
