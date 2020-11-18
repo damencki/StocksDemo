@@ -36,7 +36,7 @@ class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
     
     private lazy var descriptionLabel = UILabel {
         $0.font = .systemFont(ofSize: 16)
-        $0.textColor = .label
+        $0.textColor = .secondaryLabel
         $0.numberOfLines = 0
     }
     
