@@ -8,8 +8,8 @@ protocol StocksServiceProtocol {
 class StocksService: StocksServiceProtocol {
     private let stub: StubProtocol
     
-    init() {
-        self.stub = Stub()
+    init(stub: StubProtocol) {
+        self.stub = stub
     }
     
     func getStocks() -> [Stock] {
