@@ -16,14 +16,14 @@ class BarView: UIView {
         $0.backgroundColor = .filled
     }
     
+    private var topFilledViewConstraint: Constraint?
+    private var value: Int = 0
+    private var maximumValue: Int = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    
-    private var topFilledViewConstraint: Constraint?
-    private var value: Int = 0
-    private var maximumValue: Int = 0
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
