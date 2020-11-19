@@ -58,6 +58,10 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     }
     
     private func getProfits(values: [Int]) -> [StockProfit] {
+        if values.count < 2 {
+            return []
+        }
+        
         let null = -1
         
         var stockProfits: [StockProfit] = []
