@@ -40,14 +40,14 @@ class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
         $0.numberOfLines = 0
     }
     
-    var presenter: StockDetailsPresenterProtocol!
+    var presenter: StockDetailsPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdate))
         setupUI()
-        presenter.viewDidLoad()
+        presenter?.viewDidLoad()
     }
     
     private func setupUI() {
@@ -70,7 +70,7 @@ class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
     }
     
     @objc private func didTapUpdate() {
-        presenter.update()
+        presenter?.update()
     }
     
     func setValuesCount(_ count: Int) {

@@ -21,13 +21,13 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         }
     }
     
-    var presenter: StockListPresenter!
+    var presenter: StockListPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
-        presenter.viewDidLoad()
+        presenter?.viewDidLoad()
     }
     
     private func setupUI() {
@@ -41,7 +41,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     }
     
     @objc private func didTapUpdateButton() {
-        presenter.didTapUpdate()
+        presenter?.didTapUpdate()
     }
     
     func update(stocks: [Stock]) {
@@ -70,6 +70,6 @@ extension StockListViewController: UITableViewDataSource {
 
 extension StockListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.didSelect(stock: stocks[indexPath.row])
+        presenter?.didSelect(stock: stocks[indexPath.row])
     }
 }
