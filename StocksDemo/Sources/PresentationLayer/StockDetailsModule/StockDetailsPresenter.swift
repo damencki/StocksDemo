@@ -57,6 +57,9 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
         return "\(profit) - the​ ​maximum​ ​profit​ ​that​ ​can be​ ​made​ ​by​ ​buying​ ​and​ ​by selling​ ​on​ ​consecutive​ ​days."
     }
     
+    /// Get profits ranges with profit value
+    /// - Parameter values: Integer value more than 0. If values count is less than 2 function returns empty array
+    /// - Returns: Profits with buying and selling indexes
     private func getProfits(values: [Int]) -> [StockProfit] {
         if values.count < 2 {
             return []
@@ -93,22 +96,22 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     }
     
     func viewDidLoad() {
-         view?.setValuesCount(stock.prices.count)
-         view?.updateBarChart(barViewModels(from: stock))
-         view?.updateNavigationTitle(stock.tickerName)
-         view?.updateNameLabel(text: stock.name)
-         view?.updateDescriptionLabel(text: descriptionText(from: stock))
-     }
-     
-     func update() {
-         let stocks = stockService.update()
-         guard let stock = stocks.first(where: { $0.id == stock.id })  else {
-             return
-         }
-         self.stock = stock
-         
-         view?.updateBarChart(barViewModels(from: stock))
-         view?.updateDescriptionLabel(text: descriptionText(from: stock))
-         flowDelegate?.didStocksUpdate()
-     }
+        view?.setValuesCount(stock.prices.count)
+        view?.updateBarChart(barViewModels(from: stock))
+        view?.updateNavigationTitle(stock.tickerName)
+        view?.updateNameLabel(text: stock.name)
+        view?.updateDescriptionLabel(text: descriptionText(from: stock))
+    }
+    
+    func update() {
+        let stocks = stockService.update()
+        guard let stock = stocks.first(where: { $0.id == stock.id })  else {
+            return
+        }
+        self.stock = stock
+        
+        view?.updateBarChart(barViewModels(from: stock))
+        view?.updateDescriptionLabel(text: descriptionText(from: stock))
+        flowDelegate?.didStocksUpdate()
+    }
 }
