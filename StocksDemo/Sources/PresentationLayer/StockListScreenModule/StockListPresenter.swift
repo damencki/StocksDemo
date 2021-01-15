@@ -1,3 +1,4 @@
+import RxSwift
 import Foundation
 
 protocol StockListPresenterProtocol: class {
@@ -9,6 +10,7 @@ protocol StockListPresenterProtocol: class {
 class StockListPresenter: StockListPresenterProtocol {
     private weak var view: StockListViewProtocol?
     private let stocksService: StocksServiceProtocol
+    private let disposeBag = DisposeBag()
     
     required init(view: StockListViewProtocol, stocksService: StocksServiceProtocol) {
         self.view = view
@@ -16,22 +18,17 @@ class StockListPresenter: StockListPresenterProtocol {
     }
     
     func viewDidLoad() {
-        view?.update(stocks: stocksService.getStocks())
+        stocksService.getStocks().subscribe  { [weak self] stocks in
+            self?.view?.update(stocks: stocks)
+        }.disposed(by: disposeBag)
     }
     
     func didSelect(stock: Stock) {
-        let stockDetailsModule = ModulesBuilder.createStockDetailsModule(stock: stock, stocksService: stocksService, flowDelegate: self)
+        let stockDetailsModule = ModulesBuilder.createStockDetailsModule(stock: stock, stocksService: stocksService)
         view?.show(module: stockDetailsModule)
     }
     
     func didTapUpdate() {
-        let stocks = stocksService.update()
-        view?.update(stocks: stocks)
-    }
-}
-
-extension StockListPresenter: StockDetailsPresenterFlowDelegate {
-    func didStocksUpdate() {
-        view?.update(stocks: stocksService.getStocks())
+        stocksService.refresh()
     }
 }

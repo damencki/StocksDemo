@@ -1,12 +1,9 @@
+import RxSwift
 import Foundation
 
 protocol StockDetailsPresenterProtocol: class {
     func viewDidLoad()
     func update()
-}
-
-protocol StockDetailsPresenterFlowDelegate: class {
-    func didStocksUpdate()
 }
 
 struct StockProfit {
@@ -19,16 +16,14 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     private weak var view: StockDetailsViewProtocol?
     private var stock: Stock
     private let stockService: StocksServiceProtocol
-    private weak var flowDelegate: StockDetailsPresenterFlowDelegate?
+    private let disposeBag = DisposeBag()
     
     required init(view: StockDetailsViewProtocol,
                   stock: Stock,
-                  stockService: StocksServiceProtocol,
-                  flowDelegate: StockDetailsPresenterFlowDelegate?) {
+                  stockService: StocksServiceProtocol) {
         self.view = view
         self.stock = stock
         self.stockService = stockService
-        self.flowDelegate = flowDelegate
     }
     
     private func barViewModels(from stock: Stock) -> [BarViewModel] {
@@ -97,21 +92,26 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     
     func viewDidLoad() {
         view?.setValuesCount(stock.prices.count)
-        view?.updateBarChart(barViewModels(from: stock))
-        view?.updateNavigationTitle(stock.tickerName)
-        view?.updateNameLabel(text: stock.name)
-        view?.updateDescriptionLabel(text: descriptionText(from: stock))
+        bindings()
+    }
+    
+    private func bindings() {
+        stockService.getStocks()            
+            .subscribe { [weak self] stocks in
+                guard let self = self, let stock = stocks.first(where: { $0.id == self.stock.id })  else {
+                    return
+                }
+                self.view?.updateBarChart(self.barViewModels(from: stock))
+                self.view?.updateDescriptionLabel(text: self.descriptionText(from: stock))
+                self.view?.updateNameLabel(text: stock.name)
+                self.view?.updateNavigationTitle(stock.tickerName)
+            } onError: {error in
+                print(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     func update() {
-        let stocks = stockService.update()
-        guard let stock = stocks.first(where: { $0.id == stock.id })  else {
-            return
-        }
-        self.stock = stock
-        
-        view?.updateBarChart(barViewModels(from: stock))
-        view?.updateDescriptionLabel(text: descriptionText(from: stock))
-        flowDelegate?.didStocksUpdate()
+        stockService.refresh()
     }
 }

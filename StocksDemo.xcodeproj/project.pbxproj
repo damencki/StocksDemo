@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B022E6425B1F0C80086C3DA /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B022E6325B1F0C80086C3DA /* AppError.swift */; };
 		B314AE32255DA70600E1EA51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314AE31255DA70600E1EA51 /* AppDelegate.swift */; };
 		B314AE36255DA70600E1EA51 /* StockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314AE35255DA70600E1EA51 /* StockListViewController.swift */; };
 		B314AE3B255DA70900E1EA51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B314AE3A255DA70900E1EA51 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B022E6325B1F0C80086C3DA /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		B263B17D0FC962D649440368 /* Pods_StocksDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B314AE2E255DA70600E1EA51 /* StocksDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B314AE31255DA70600E1EA51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				B351E32E255EB19600FB0981 /* Main */,
 				B3D0BFCA255EA0590098800F /* PresentationLayer */,
 				B38B28642563E8A500A43624 /* Stub */,
+				8B022E6325B1F0C80086C3DA /* AppError.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			files = (
 				B39F708A255ED5D000D4AB6F /* StockDetailsPresenter.swift in Sources */,
 				B38B28632563E67D00A43624 /* UIStackView+Extensions.swift in Sources */,
+				8B022E6425B1F0C80086C3DA /* AppError.swift in Sources */,
 				B3AA9B06255EEC9900B78C25 /* Stub.swift in Sources */,
 				B38B28382562DE8F00A43624 /* StocksService.swift in Sources */,
 				B3AA9B07255EEC9900B78C25 /* Stock.swift in Sources */,
