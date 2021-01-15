@@ -1,3 +1,5 @@
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
@@ -8,8 +10,6 @@ protocol StockListViewProtocol: class {
 
 class StockListViewController: UIViewController, StockListViewProtocol {
     private lazy var tableView = UITableView {
-        $0.dataSource = self
-        $0.delegate = self
         $0.register(StockCell.self, forCellReuseIdentifier: String(describing: StockCell.self))
         $0.separatorStyle = .none
         $0.backgroundColor = .clear
@@ -23,11 +23,13 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     
     var presenter: StockListPresenter?
     
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
-        presenter?.viewDidLoad()
+        setupBindings()
     }
     
     private func setupUI() {
@@ -40,6 +42,23 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         }
     }
     
+    private func setupBindings() {
+        guard let presenter = presenter else {
+            return
+        }
+        
+        presenter.stocksObservable()
+            .bind(to: tableView.rx.items(cellIdentifier: String(describing: StockCell.self), cellType: StockCell.self)) {row, stock, cell in
+                cell.update(stock)
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx
+            .itemSelected
+            .bind(to: presenter.stockSelectedSubject)
+            .disposed(by: disposeBag)
+    }
+    
     @objc private func didTapUpdateButton() {
         presenter?.didTapUpdate()
     }
@@ -50,26 +69,5 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     
     func show(module: UIViewController) {
         navigationController?.pushViewController(module, animated: true)
-    }
-}
-
-extension StockListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        stocks.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: StockCell.self), for: indexPath)
-        guard let stockCell = cell as? StockCell else {
-            return cell
-        }
-        stockCell.update(stocks[indexPath.row])
-        return stockCell
-    }
-}
-
-extension StockListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.didSelect(stock: stocks[indexPath.row])
     }
 }
