@@ -1,3 +1,5 @@
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
@@ -41,12 +43,14 @@ class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
     }
     
     var presenter: StockDetailsPresenterProtocol?
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdate))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: nil)
         setupUI()
+        setupBindings()
         presenter?.viewDidLoad()
     }
     
@@ -69,8 +73,14 @@ class StockDetailsViewController: UIViewController, StockDetailsViewProtocol {
         stackView.addArrangedSubview(descriptionLabel)
     }
     
-    @objc private func didTapUpdate() {
-        presenter?.update()
+    private func setupBindings() {
+        guard let presenter = presenter else {
+            return
+        }
+        navigationItem.rightBarButtonItem?.rx
+            .tap
+            .bind(to: presenter.didTapUpdateAction)
+            .disposed(by: disposeBag)
     }
     
     func setValuesCount(_ count: Int) {

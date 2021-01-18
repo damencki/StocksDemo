@@ -3,7 +3,9 @@ import Foundation
 
 protocol StockDetailsPresenterProtocol: class {
     func viewDidLoad()
-    func update()
+    
+    var didTapUpdateAction: PublishSubject<Void> {get}
+    var stocksObservable: Observable<[Stock]> { get }
 }
 
 struct StockProfit {
@@ -18,6 +20,10 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     private let stockService: StocksServiceProtocol
     private let disposeBag = DisposeBag()
     
+    var didTapUpdateAction: PublishSubject<Void> = PublishSubject<Void>()
+    var stocksObservable: Observable<[Stock]> {
+        return stockService.getStocks()
+    }
     required init(view: StockDetailsViewProtocol,
                   stock: Stock,
                   stockService: StocksServiceProtocol) {
@@ -96,7 +102,7 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
     }
     
     private func bindings() {
-        stockService.getStocks()            
+        stocksObservable
             .subscribe { [weak self] stocks in
                 guard let self = self, let stock = stocks.first(where: { $0.id == self.stock.id })  else {
                     return
@@ -109,9 +115,10 @@ class StockDetailsPresenter: StockDetailsPresenterProtocol {
                 print(error)
             }
             .disposed(by: disposeBag)
-    }
-    
-    func update() {
-        stockService.refresh()
+        
+        
+        didTapUpdateAction.subscribe { [weak self] event in
+            self?.stockService.refresh()
+        }.disposed(by: disposeBag)
     }
 }

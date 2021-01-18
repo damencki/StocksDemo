@@ -6,6 +6,7 @@ protocol StockListPresenterProtocol: class {
     var didStockSelectAction: PublishSubject<IndexPath> { get }
     var didTapUpdateAction: PublishSubject<Void> { get }
     var stocksObservable: Observable<[Stock]> { get }
+    var itemSelectedAction: PublishSubject<UIViewController> { get }
 }
 
 class StockListPresenter: StockListPresenterProtocol {
@@ -18,6 +19,8 @@ class StockListPresenter: StockListPresenterProtocol {
     var stocksObservable: Observable<[Stock]> {
         return stocksService.getStocks()
     }
+    
+    var itemSelectedAction: PublishSubject<UIViewController> = PublishSubject<UIViewController>()
     
     private var stocks = [Stock]()
     
@@ -39,7 +42,7 @@ class StockListPresenter: StockListPresenterProtocol {
                 return
             }
             let stock = self.stocks[indexPath.row]
-            self.view?.show(module: ModulesBuilder.createStockDetailsModule(stock: stock, stocksService: self.stocksService))
+            self.itemSelectedAction.onNext(ModulesBuilder.createStockDetailsModule(stock: stock, stocksService: self.stocksService))
         } onError: { error in
             print(error)
         }.disposed(by: disposeBag)

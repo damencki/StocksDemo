@@ -46,6 +46,10 @@ class StockListViewController: UIViewController, StockListViewProtocol {
             }
             .disposed(by: disposeBag)
         
+        presenter.itemSelectedAction.subscribe { [weak self] viewController in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }.disposed(by: disposeBag)
+        
         tableView.rx
             .itemSelected
             .bind(to: presenter.didStockSelectAction)
