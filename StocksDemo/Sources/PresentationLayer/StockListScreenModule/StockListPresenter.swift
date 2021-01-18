@@ -3,10 +3,9 @@ import RxSwift
 import Foundation
 
 protocol StockListPresenterProtocol: class {
-    var stockSelectedSubject: PublishSubject<IndexPath> { get }
-    func didTapUpdate()
-    
-    func stocksObservable() -> Observable<[Stock]>
+    var didStockSelectAction: PublishSubject<IndexPath> { get }
+    var didTapUpdateAction: PublishSubject<Void> { get }
+    var stocksObservable: Observable<[Stock]> { get }
 }
 
 class StockListPresenter: StockListPresenterProtocol {
@@ -14,7 +13,11 @@ class StockListPresenter: StockListPresenterProtocol {
     private let stocksService: StocksServiceProtocol
     private let disposeBag = DisposeBag()
     
-    let stockSelectedSubject = PublishSubject<IndexPath>()
+    let didStockSelectAction = PublishSubject<IndexPath>()
+    var didTapUpdateAction = PublishSubject<Void>()
+    var stocksObservable: Observable<[Stock]> {
+        return stocksService.getStocks()
+    }
     
     private var stocks = [Stock]()
     
@@ -30,8 +33,8 @@ class StockListPresenter: StockListPresenterProtocol {
         } onError: { error in
             print(error)
         }.disposed(by: disposeBag)
-
-        stockSelectedSubject.asObserver().subscribe { [weak self] indexPath in
+        
+        didStockSelectAction.asObserver().subscribe { [weak self] indexPath in
             guard let self = self else {
                 return
             }
@@ -40,13 +43,10 @@ class StockListPresenter: StockListPresenterProtocol {
         } onError: { error in
             print(error)
         }.disposed(by: disposeBag)
-    }
-    
-    func didTapUpdate() {
-        stocksService.refresh()
-    }
-    
-    func stocksObservable() -> Observable<[Stock]> {
-        return stocksService.getStocks()
+        
+        didTapUpdateAction.subscribe { [weak self] event in
+            self?.stocksService.refresh()
+        }
+        .disposed(by: disposeBag)
     }
 }

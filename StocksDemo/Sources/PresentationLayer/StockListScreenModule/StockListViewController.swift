@@ -4,7 +4,6 @@ import SnapKit
 import UIKit
 
 protocol StockListViewProtocol: class {
-    func update(stocks: [Stock])
     func show(module: UIViewController)
 }
 
@@ -14,13 +13,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         $0.separatorStyle = .none
         $0.backgroundColor = .clear
     }
-    
-    private var stocks: [Stock] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
+        
     var presenter: StockListPresenter?
     
     private let disposeBag = DisposeBag()
@@ -34,7 +27,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
     
     private func setupUI() {
         navigationItem.title = "Stock​ ​Exchange"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(didTapUpdateButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: nil)
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
@@ -47,7 +40,7 @@ class StockListViewController: UIViewController, StockListViewProtocol {
             return
         }
         
-        presenter.stocksObservable()
+        presenter.stocksObservable
             .bind(to: tableView.rx.items(cellIdentifier: String(describing: StockCell.self), cellType: StockCell.self)) {row, stock, cell in
                 cell.update(stock)
             }
@@ -55,16 +48,13 @@ class StockListViewController: UIViewController, StockListViewProtocol {
         
         tableView.rx
             .itemSelected
-            .bind(to: presenter.stockSelectedSubject)
+            .bind(to: presenter.didStockSelectAction)
             .disposed(by: disposeBag)
-    }
-    
-    @objc private func didTapUpdateButton() {
-        presenter?.didTapUpdate()
-    }
-    
-    func update(stocks: [Stock]) {
-        self.stocks = stocks
+        
+        navigationItem.rightBarButtonItem?.rx
+            .tap
+            .bind(to: presenter.didTapUpdateAction)
+            .disposed(by: disposeBag)
     }
     
     func show(module: UIViewController) {
